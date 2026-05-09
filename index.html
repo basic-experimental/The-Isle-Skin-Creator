@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Isle Hordetest Skin Creator</title>
+        <meta charset="utf8">
+        <style>
+            #dino {
+                margin-bottom: 10px;
+            }
+
+            .color-input-container label {
+                display: inline-block;
+                width: 100px;
+            }
+
+            #output {
+                margin-top: 20px;
+                margin-right: 10px;
+                width: 35em;
+                font-family: monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <label for="dino">Creature</label>
+        <select name="dino" id="dino">
+            <option value="deinosuchus">Deinosuchus</option>
+            <option value="tyrannosaurus">Tyrannosaurus</option>
+            <option value="allosaurus">Allosaurus</option>
+            <option value="carnotaurus">Carnotaurus</option>
+            <option value="ceratosaurus">Ceratosaurus</option>
+            <option value="dilophosaurus">Dilophosaurus</option>
+            <option value="herrerasaurus">Herrerasaurus</option>
+            <option value="omniraptor">Omniraptor</option>
+            <option value="troodon">Troodon</option>
+            <option value="pteradon">Pteradon</option>
+            <option value="triceratops">Triceratops</option>
+            <option value="stegosaurus">Stegosaurus</option>
+            <option value="maiasaura">Maiasaura</option>
+            <option value="tenontosaurus">Tenontosaurus</option>
+            <option value="kentrosaurus">Kentrosaurus</option>
+            <option value="diabloceratops">Diabloceratops</option>
+            <option value="pachycephalosaurus">Pachycephalosaurus</option>
+            <option value="dryosaurus">Dryosaurus</option>
+            <option value="hypsilophodon">Hypsilophodon</option>
+            <option value="gallimimus">Gallimimus</option>
+            <option value="beipiaosaurus">Beipiaosaurus</option>
+        </select>
+        <div class="color-input-container">
+            <label for="male-display">Male Display</label>
+            <input type="color" name="male-display" id="maleDisplay">
+        </div>
+        <div class="color-input-container">
+            <label for="markings">Markings</label>
+            <input type="color" name="markings" id="markings">
+        </div>
+        <div class="color-input-container">
+            <label for="flank">Flank</label>
+            <input type="color" name="flank" id="flank">
+        </div>
+        <div class="color-input-container">
+            <label for="body">Body</label>
+            <input type="color" name="body" id="body">
+        </div>
+        <div class="color-input-container">
+            <label for="underbelly">Underbelly</label>
+            <input type="color" name="underbelly" id="underbelly">
+        </div>
+        <input type="text" id="output" disabled></div><button id="copyButton">Copy</button>
+        <script>
+            const dinoInput = document.getElementById("dino");
+            const maleDisplayInput = document.getElementById("maleDisplay");
+            const markingsInput = document.getElementById("markings");
+            const flankInput = document.getElementById("flank");
+            const bodyInput = document.getElementById("body");
+            const underbellyInput = document.getElementById("underbelly");
+            const output = document.getElementById("output");
+            const copyButton = document.getElementById("copyButton");
+
+            let code;
+            let copyTimeout;
+
+            function update() {
+                const dino = dinoInput.value;
+                const maleDisplay = maleDisplayInput.value.slice(1);
+                const markings = markingsInput.value.slice(1);
+                const flank = flankInput.value.slice(1);
+                const body = bodyInput.value.slice(1);
+                const underbelly = underbellyInput.value.slice(1);
+                code = `${dino}000${underbelly}FF${body}FF${flank}FF${markings}FF${maleDisplay}FF`;
+                output.value = code;
+            }
+
+            update();
+
+            dinoInput.addEventListener("change", update);
+            maleDisplayInput.addEventListener("input", update);
+            markingsInput.addEventListener("input", update);
+            flankInput.addEventListener("input", update);
+            bodyInput.addEventListener("input", update);
+            underbellyInput.addEventListener("input", update);
+            copyButton.addEventListener("click", function() {
+                navigator.clipboard.writeText(code).then(() => {
+                    copyButton.textContent = "Copied!";
+                }).catch((err) => {
+                    copyButton.textContent = "Error!";
+                    console.error(err);
+                    alert(err);
+                }).finally(() => {
+                    clearTimeout(copyTimeout);
+                    copyTimeout = setTimeout(() => copyButton.textContent = "Copy", 2000);
+                });
+            });
+        </script>
+    </body>
+</html>
