@@ -102,6 +102,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                 background-color: var(--theme1);
                 border-radius: 2px;
                 border-width: 1px;
+                font-size: 10pt;
             }
 
             footer {
@@ -229,12 +230,21 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
             copyButton.addEventListener("click", function() {
                 clearTimeout(copyTimeout);
                 navigator.clipboard.writeText(code).then(() => {
-                    copyButton.textContent = "Copied!";
+                    if(Math.random() > 0.9) {
+                        copyButton.style.setProperty('font-size', '7pt');
+                        copyButton.innerText = "You didn't make something\nhideous, did you?";
+                    } else {
+                        copyButton.style.removeProperty('font-size');
+                        copyButton.textContent = "Copied!";
+                    }
                 }).catch((err) => {
                     copyButton.textContent = "Error!";
                     console.error(err);
                 }).finally(() => {
-                    copyTimeout = setTimeout(() => copyButton.textContent = "Copy", 2000);
+                    copyTimeout = setTimeout(() => {
+                        copyButton.style.removeProperty('font-size');
+                        copyButton.textContent = "Copy";
+                    }, 2000);
                 });
             });
         </script>
