@@ -124,8 +124,8 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                     <input type="checkbox" id="onlyValid" checked>
                     <label for="onlyValid">Only allow skins that work when you spawn in</label>
                 </div>
-                <div class="input-container">
-                    <label for="dino">Creature: </label>
+                <div id="dinoInputContainer" class="input-container">
+                    <label for="dino">Creature:&nbsp;</label>
                     <select name="dino" id="dino">
                         <option value="">-- Select a Creature --</option>
                         <optgroup label="Herbivore">
@@ -262,7 +262,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                 const body = bodyInput.value.slice(1).toUpperCase();
                 const underbelly = underbellyInput.value.slice(1).toUpperCase();
 
-                code = `${dino}${pattern}${variation}0${underbelly}FF${body}FF${flank}FF${markings}FF${maleDisplay}FF`;
+                code = `${dino}${pattern}${variation}1${underbelly}FF${body}FF${flank}FF${markings}FF${maleDisplay}FF`;
                 output.textContent = code;
             }
 
