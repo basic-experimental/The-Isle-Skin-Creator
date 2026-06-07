@@ -327,7 +327,11 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                     secondaryTheme.disabled = true;
                     tertiaryTheme.hidden = false;
 
-                    themeInput.value = 2;
+                    if(themeInput.value != 2) {
+                        themeInput.value = 2;
+                        themeInput.dispatchEvent(new Event('change'));
+                    }
+
                     themeInput.dispatchEvent(new Event('change'));
 
                     fixColorInputs();
@@ -336,10 +340,14 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                     secondaryTheme.disabled = false;
                     tertiaryTheme.hidden = true;
                     
-                    themeInput.value = 0;
-                    themeInput.dispatchEvent(new Event('change'));
+                    if(themeInput.value == 2) {
+                        themeInput.value = 0;
+                        themeInput.dispatchEvent(new Event('change'));
+                    }
                 }
             });
+
+            onlyValidInput.dispatchEvent(new Event('change'));
         </script>
     </body>
 </html>
