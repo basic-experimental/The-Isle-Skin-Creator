@@ -60,6 +60,15 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                 height: 100%;
             }
 
+            label[for="onlyValid"] {
+                white-space: nowrap;
+                margin-left: 5px;
+            }
+
+            #onlyValid {
+                transform: scale(1.25);
+            }
+
             .color-input-container label {
                 display: inline-block;
                 width: 150px;
@@ -120,9 +129,9 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                 <header>
                     <h1>The Isle Hordetest Skin Creator</h1>
                 </header>
-                <div class="input-container" style="display: none;">
+                <div class="input-container">
                     <input type="checkbox" id="onlyValid" checked>
-                    <label for="onlyValid">Only allow skins that work after you spawn in</label>
+                    <label for="onlyValid">Only allow skins that work when you spawn in</label>
                 </div>
                 <div id="dinoInputContainer" class="input-container">
                     <label for="dino">Creature:&nbsp;</label>
@@ -181,7 +190,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                     <select id="theme">
                         <option value="0">Default</option>
                         <option value="1">Secondary</option>
-                        <!--<option value="2">Tertiary</option>-->
+                        <option value="2">Tertiary (Bypass check)</option>
                     </select>
                 </div>
                 <div class="color-input-container input-container">
@@ -278,7 +287,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
             update();
             
-            onlyValidInput.addEventListener("change", fixColorInputs);
             dinoInput.addEventListener("change", update);
             patternInput.addEventListener("change", update);
             themeInput.addEventListener("change", update);
@@ -308,6 +316,29 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                         copyButton.textContent = "Copy";
                     }, 2000);
                 });
+            });
+
+            onlyValidInput.addEventListener("change", function() {
+                const defaultTheme = themeInput.querySelector('option[value="0"]');
+                const secondaryTheme = themeInput.querySelector('option[value="1"]');
+                const tertiaryTheme = themeInput.querySelector('option[value="2"]');
+                if(onlyValidInput.checked) {
+                    defaultTheme.disabled = true;
+                    secondaryTheme.disabled = true;
+                    tertiaryTheme.hidden = false;
+
+                    themeInput.value = 2;
+                    themeInput.dispatchEvent(new Event('change'));
+
+                    fixColorInputs();
+                } else {
+                    defaultTheme.disabled = false;
+                    secondaryTheme.disabled = false;
+                    tertiaryTheme.hidden = true;
+                    
+                    themeInput.value = 0;
+                    themeInput.dispatchEvent(new Event('change'));
+                }
             });
         </script>
     </body>
