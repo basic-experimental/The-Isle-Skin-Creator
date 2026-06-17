@@ -210,7 +210,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                     <select id="theme">
                         <option value="0">Default</option>
                         <option value="1">Secondary</option>
-                        <option value="2">Tertiary (Bypass check)</option>
                     </select>
                 </div>
                 <div class="color-input-container input-container">
@@ -859,7 +858,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
             const themeInput = document.getElementById("theme");
             const defaultThemeOption = themeInput.querySelector('option[value="0"]');
             const secondaryThemeOption = themeInput.querySelector('option[value="1"]');
-            const tertiaryThemeOption = themeInput.querySelector('option[value="2"]');
             const maleDisplayInput = document.getElementById("maleDisplay");
             const markingsInput = document.getElementById("markings");
             const flankInput = document.getElementById("flank");
@@ -1043,37 +1041,16 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                 } finally {
                     saveFileTimeout = setTimeout(() => {
                         saveFileButton.textContent = "Save File";
-                    }, 2000)
+                    }, 2000);
                 }
             });
 
             onlyValidInput.addEventListener("change", function() {
                 if(onlyValidInput.checked) {
-                    defaultThemeOption.disabled = true;
-                    secondaryThemeOption.disabled = true;
-                    tertiaryThemeOption.hidden = false;
-
-                    if(themeInput.value != 2) {
-                        themeInput.value = 2;
-                        themeInput.dispatchEvent(new Event('change'));
-                    }
-
-                    themeInput.dispatchEvent(new Event('change'));
-
                     fixColorInputs();
-                } else {
-                    defaultThemeOption.disabled = false;
-                    secondaryThemeOption.disabled = false;
-                    tertiaryThemeOption.hidden = true;
-                    
-                    if(themeInput.value == 2) {
-                        themeInput.value = 0;
-                        themeInput.dispatchEvent(new Event('change'));
-                    }
                 }
             });
 
-            onlyValidInput.dispatchEvent(new Event('change'));
             update();
         </script>
     </body>
